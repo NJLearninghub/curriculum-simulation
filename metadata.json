@@ -1,0 +1,6 @@
+{
+  "name": "Curriculum Simulation Portal",
+  "description": "An interactive curriculum platform mapped by Standards, Subjects, Topics, and Chapters with robust Firebase Auth, Firestore persistence, and an Admin Hub for uploading and versioning interactive HTML or TSX simulations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

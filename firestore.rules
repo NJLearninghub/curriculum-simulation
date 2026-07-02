@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Match users collection
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Match curriculum standards
+    match /standards/{standardId} {
+      allow read, write: if true;
+    }
+    
+    // Match curriculum subjects
+    match /subjects/{subjectId} {
+      allow read, write: if true;
+    }
+    
+    // Match curriculum topics
+    match /topics/{topicId} {
+      allow read, write: if true;
+    }
+    
+    // Match curriculum chapters
+    match /chapters/{chapterId} {
+      allow read, write: if true;
+    }
+    
+    // Match curriculum simulations
+    match /simulations/{simulationId} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and roles.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique user ID" },
+        "email": { "type": "string", "description": "The user email address" },
+        "role": { "type": "string", "enum": ["admin", "student"], "description": "User role" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "When the user was created" },
+        "bookmarkedChapters": { "type": "array", "description": "List of bookmarked chapter IDs" },
+        "bookmarkedTopics": { "type": "array", "description": "List of bookmarked topic IDs" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Standard": {
+      "title": "Standard / Grade",
+      "description": "A curriculum standard or grade level.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "name", "order"]
+    },
+    "Subject": {
+      "title": "Subject",
+      "description": "A subject within a standard (e.g., Physics).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "standardId": { "type": "string" },
+        "name": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "standardId", "name", "order"]
+    },
+    "Topic": {
+      "title": "Topic",
+      "description": "A topic within a subject (e.g., Mechanics).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "subjectId": { "type": "string" },
+        "name": { "type": "string" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "subjectId", "name", "order"]
+    },
+    "Chapter": {
+      "title": "Chapter",
+      "description": "A chapter within a topic (e.g., Newton's Laws).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "topicId": { "type": "string" },
+        "name": { "type": "string" },
+        "order": { "type": "number" },
+        "hasSimulation": { "type": "boolean" }
+      },
+      "required": ["id", "topicId", "name", "order", "hasSimulation"]
+    },
+    "Simulation": {
+      "title": "Simulation Content",
+      "description": "HTML or TSX simulation code corresponding to a chapter.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Same as chapterId" },
+        "chapterId": { "type": "string" },
+        "fileName": { "type": "string" },
+        "content": { "type": "string", "description": "Raw HTML or TSX file contents" },
+        "type": { "type": "string", "enum": ["html", "tsx"] },
+        "uploadedBy": { "type": "string" },
+        "uploadedAt": { "type": "string", "format": "date-time" },
+        "version": { "type": "number" }
+      },
+      "required": ["id", "chapterId", "fileName", "content", "type", "uploadedBy", "uploadedAt"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User collection keyed by Firebase Auth UID."
+    },
+    "standards/{standardId}": {
+      "schema": "Standard",
+      "description": "Top-level curriculum standards."
+    },
+    "subjects/{subjectId}": {
+      "schema": "Subject",
+      "description": "Subjects, e.g., standardId_physics."
+    },
+    "topics/{topicId}": {
+      "schema": "Topic",
+      "description": "Topics, e.g., subjectId_mechanics."
+    },
+    "chapters/{chapterId}": {
+      "schema": "Chapter",
+      "description": "Chapters with simulation details, e.g., topicId_newtons-laws."
+    },
+    "simulations/{simulationId}": {
+      "schema": "Simulation",
+      "description": "Simulations containing code templates linked to chapters."
+    }
+  }
+}
